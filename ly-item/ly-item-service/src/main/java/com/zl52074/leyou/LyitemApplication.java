@@ -10,6 +10,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author: zl52074
  * @time: 2020/10/19 23:59
  */
+//git test
 @EnableDiscoveryClient //开启客户端服务发现
 @SpringBootApplication
 public class LyitemApplication {
