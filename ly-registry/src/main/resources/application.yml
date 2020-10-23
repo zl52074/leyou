@@ -1,0 +1,18 @@
+#端口
+server:
+  port: 8761
+
+#服务名称
+spring:
+  application:
+    name: ly-registry
+
+#配置服务注册地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+    #启动时是否注册自己
+#    register-with-eureka: false
+    fetch-registry: false
+
