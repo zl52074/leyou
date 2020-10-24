@@ -22,7 +22,6 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-    //测试1
     @PostMapping
     public ResponseEntity<Item> saveItem(Item item) {
         if(item.getPrice()==null){
