@@ -5,7 +5,7 @@ spring:
   application:
     name: item-service
   datasource:
-    url: jdbc:mysql://localhost:3306/springcloud_demo
+    url: jdbc:mysql://localhost:3306/leyou
     username: root
     password: root
 
@@ -14,3 +14,7 @@ eureka:
     service-url:
       #配置eureka注册地址
       defaultZone: http://127.0.0.1:8761/eureka,http://127.0.0.1:8762/eureka
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #通用mapper日志输出sql

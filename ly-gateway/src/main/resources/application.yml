@@ -4,7 +4,7 @@ server:
 #服务名称
 spring:
   application:
-    name: ly-gateway
+    name: ly-api-gateway
 
 #配置服务注册地址
 eureka:

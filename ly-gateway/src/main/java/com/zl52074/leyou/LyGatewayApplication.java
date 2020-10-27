@@ -2,7 +2,6 @@ package com.zl52074.leyou;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 /**
@@ -12,8 +11,8 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
  */
 @EnableZuulProxy //启用zuul
 @SpringBootApplication
-public class LygatewayApplication {
+public class LyGatewayApplication {
     public static void main(String[] args) {
-        SpringApplication.run(LygatewayApplication.class);
+        SpringApplication.run(LyGatewayApplication.class);
     }
 }

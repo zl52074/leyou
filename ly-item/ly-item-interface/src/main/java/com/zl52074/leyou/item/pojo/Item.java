@@ -3,7 +3,7 @@ package com.zl52074.leyou.item.pojo;
 import lombok.Data;
 
 /**
- * @description:
+ * @description: 测试类
  * @author: zl52074
  * @time: 2020/10/20 23:04
  */

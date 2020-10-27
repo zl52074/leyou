@@ -11,5 +11,13 @@
 
     <artifactId>ly-item-interface</artifactId>
 
+    <dependencies>
+        <!--通用mapper-->
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>
