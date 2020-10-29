@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @description:
+ * @description: 商品分类Controller
  * @author: zl52074
  * @time: 2020/10/27 21:28
  */
