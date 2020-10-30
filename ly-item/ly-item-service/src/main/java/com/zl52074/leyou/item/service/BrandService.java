@@ -3,6 +3,8 @@ package com.zl52074.leyou.item.service;
 import com.zl52074.leyou.common.pojo.PageResult;
 import com.zl52074.leyou.item.pojo.Brand;
 
+import java.util.List;
+
 /**
  * @description: 商品品牌service接口
  * @author: zl52074
@@ -21,4 +23,14 @@ public interface BrandService {
      * @time 2020/10/29 14:58
      */
     PageResult<Brand> queryBrandByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key);
+
+    /**
+     * @description 品牌新增
+     * @param brand 品牌实体类
+     * @param cids 品牌对应分类id
+     * @return void
+     * @author zl52074
+     * @time 2020/10/30 10:09
+     */
+    public void saveBrand(Brand brand, List<Long> cids);
 }

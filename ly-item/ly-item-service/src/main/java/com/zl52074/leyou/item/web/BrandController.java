@@ -1,11 +1,15 @@
 package com.zl52074.leyou.item.web;
 
 import com.zl52074.leyou.common.pojo.PageResult;
+import com.zl52074.leyou.item.mapper.BrandMapper;
 import com.zl52074.leyou.item.pojo.Brand;
 import com.zl52074.leyou.item.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @description: 商品品牌Controller
@@ -39,5 +43,19 @@ public class BrandController {
             @RequestParam(value = "key",required = false) String key
     ){
         return ResponseEntity.ok(brandService.queryBrandByPage(page,rows,sortBy,desc,key));
+    }
+
+    /**
+     * @description 品牌新增
+     * @param brand 品牌实体类
+     * @param cids 品牌对应分类id
+     * @return org.springframework.http.ResponseEntity<java.lang.Void>
+     * @author zl52074
+     * @time 2020/10/30 10:07
+     */
+    @PostMapping
+    public ResponseEntity<Void> saveBrand(Brand brand,@RequestParam("cids") List<Long> cids){
+        brandService.saveBrand(brand, cids);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

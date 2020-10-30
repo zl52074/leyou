@@ -11,9 +11,11 @@ import com.zl52074.leyou.item.service.BrandService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -66,5 +68,30 @@ public class BrandServiceImpl implements BrandService {
         //解析分页结果
         PageInfo info = new PageInfo(brands);
         return new PageResult<Brand>(info.getTotal(),brands);
+    }
+
+    /**
+     * @description 品牌新增
+     * @param brand 品牌实体类
+     * @param cids 品牌对应分类id
+     * @return void
+     * @author zl52074
+     * @time 2020/10/30 10:09
+     */
+    @Transactional
+    @Override
+    public void saveBrand(Brand brand, List<Long> cids) {
+        brand.setId(null);
+        int count = brandMapper.insert(brand);
+        if(count != 1){
+            throw new LyException(ExceptionEnum.BRAND_SAVE_ERROR);
+        }
+        for(Long cid:cids){
+            count = brandMapper.insertCategoryBrand(cid,brand.getId());
+            if(count != 1){
+                throw new LyException(ExceptionEnum.BRAND_SAVE_ERROR);
+            }
+        }
+
     }
 }
