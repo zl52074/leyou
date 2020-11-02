@@ -5,6 +5,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 
 /**
  * @description: 商品品牌
@@ -20,4 +21,5 @@ public class Brand {
     private String name;// 品牌名称
     private String image;// 品牌图片
     private Character letter;
+    private List<Category> categories;
 }

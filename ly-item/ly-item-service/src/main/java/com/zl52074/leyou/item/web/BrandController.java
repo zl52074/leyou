@@ -4,6 +4,7 @@ import com.zl52074.leyou.common.pojo.PageResult;
 import com.zl52074.leyou.item.mapper.BrandMapper;
 import com.zl52074.leyou.item.pojo.Brand;
 import com.zl52074.leyou.item.service.BrandService;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,18 @@ public class BrandController {
     @PostMapping
     public ResponseEntity<Void> saveBrand(Brand brand,@RequestParam("cids") List<Long> cids){
         brandService.saveBrand(brand, cids);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> updateBrand(Brand brand,@RequestParam("cids") List<Long> cids){
+        brandService.updateBrand(brand, cids);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteBrand(@RequestParam("bid") Long bid){
+        brandService.deleteBrand(bid);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

@@ -5,10 +5,7 @@ import com.zl52074.leyou.item.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +32,18 @@ public class CategoryController {
         //OK 状态码：200
         ResponseEntity.status(HttpStatus.OK).body(categoryService.queryCategoryListByPid(pid));
         return ResponseEntity.ok(categoryService.queryCategoryListByPid(pid));
+    }
+
+    /**
+     * @description 根据brandId查询关联的分类列表
+     * @param bid
+     * @return org.springframework.http.ResponseEntity<java.util.List<com.zl52074.leyou.item.pojo.Category>>
+     * @author zl52074
+     * @time 2020/11/2 21:55
+     */
+    @GetMapping("bid/{bid}")
+    public ResponseEntity<List<Category>> queryCategoryBybid(@PathVariable("bid") Long bid){
+        return ResponseEntity.ok(categoryService.queryCategoryByBid(bid));
     }
 
 }

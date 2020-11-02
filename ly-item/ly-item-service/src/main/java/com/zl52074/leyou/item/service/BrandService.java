@@ -33,4 +33,23 @@ public interface BrandService {
      * @time 2020/10/30 10:09
      */
     public void saveBrand(Brand brand, List<Long> cids);
+
+    /**
+     * @description 更新品牌信息
+     * @param brand
+     * @param cids
+     * @return void
+     * @author zl52074
+     * @time 2020/11/2 22:45
+     */
+    public void updateBrand(Brand brand, List<Long> cids);
+
+    /**
+     * @description 根据id删除品牌
+     * @param bid
+     * @return void
+     * @author zl52074
+     * @time 2020/11/2 23:06
+     */
+    public void deleteBrand(Long bid);
 }

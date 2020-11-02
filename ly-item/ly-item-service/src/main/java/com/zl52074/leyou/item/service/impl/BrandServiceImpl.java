@@ -94,4 +94,42 @@ public class BrandServiceImpl implements BrandService {
         }
 
     }
+
+    /**
+     * @description 更新品牌信息
+     * @param brand
+     * @param cids
+     * @return void
+     * @author zl52074
+     * @time 2020/11/2 22:45
+     */
+    @Transactional
+    @Override
+    public void updateBrand(Brand brand, List<Long> cids) {
+        //删除品牌分类关系
+        brandMapper.deleteCategoryBrandByBid(brand.getId());
+        int count = brandMapper.updateByPrimaryKey(brand);
+        if(count != 1){
+            throw new LyException(ExceptionEnum.BRAND_UPDATE_ERROR);
+        }
+        //重建品牌分类关系
+        for(Long cid:cids){
+            count = brandMapper.insertCategoryBrand(cid,brand.getId());
+            if(count != 1){
+                throw new LyException(ExceptionEnum.BRAND_SAVE_ERROR);
+            }
+        }
+    }
+
+    @Override
+    public void deleteBrand(Long bid) {
+        //删除品牌分类关系
+        brandMapper.deleteCategoryBrandByBid(bid);
+        //删除品牌信息
+        Brand brand = new Brand();
+        brand.setId(bid);
+        brandMapper.delete(brand);
+    }
+
+
 }
