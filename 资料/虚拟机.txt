@@ -1,0 +1,118 @@
+开启网络
+/etc/sysconfig/network-scripts/ifcfg 
+ONBOOT = yes
+关闭防火墙 systemctl disable firewalld.service
+开启ssh允许root登陆 
+vi /etc/ssh/sshd_config
+PermitRootLogin = yes
+安装ifconfig yum -y installnet-tools.x86_64
+
+0.解压源码包
+cd /usr/local
+tar -zxf nginx-1.8.0.tar.gz 
+tar -zxf libfastcommon-1.0.7.tar.gz 
+tar -zxf fastdfs-nginx-module_v1.16.tar.gz
+tar -zxf fastdfs-5.05.tar.gz 
+
+fastDFS安装：https://www.cnblogs.com/heqiuyong/p/10298052.html
+
+1.安装gcc
+yum install -y gcc gcc-c++
+
+2.安装 perl
+yum install -y perl
+
+3.安装 libevent
+yum install -y libevent
+
+4.编译安装libfastcommon
+cd /usr/local/libfastcommon-1.0.7/
+./make.sh && ./make.sh install
+libfastcommon 安装好后会在 /usr/lib64 目录下生成  libfastcommon.so 库文件
+将 /usr/lib64 下的库文件拷贝至 /usr/lib 下
+cp /usr/lib64/libfastcommon.so /usr/lib
+
+5.编译安装 tracker
+cd /usr/local/fastdfs-5.05/
+./make.sh && ./make.sh install
+安装成功将安装目录下的 conf 下的文件拷贝到 /etc/fdfs/ 下
+cp conf/* /etc/fdfs/
+
+6.配置和启动 tracker
+cd /etc/fdfs
+vi tracker.conf
+:set number #显示行号
+    22   base_path = /home/fastdfs
+    248 http.server_port = 80
+创建 /home/fastdfs 目录
+mkdir -p /home/fastdfs
+启动 tracker
+/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf restart
+PS：启动成功后，在 /home/fastdfs/ 目录下生成两个目录， 一个是数据，一个是日志
+
+7.配置和启动 storage
+cd /etc/fdfs
+vi storage.conf
+    41   base_path = /home/fastdfs
+    109 store_path0 = /home/fdfs_storage
+    118 tracker_server = x.x.x.x:22122 (根据实际情况改)
+    http.server_port = 88
+mkdir -p /home/fdfs_storage
+/usr/bin/fdfs_storaged /etc/fdfs/storage.conf restart
+PS：启动成功后，在 /home/fdfs_storage/data 目录下生成以下显示目录
+
+
+8.测试FastDFS上传文件
+cd /etc/fdfs
+vi client.conf
+    10  base_path = /home/fastdfs
+    14  tracker_server = x.x.x.x:22122 (根据实际情况改)
+拷贝一张图片 test.jpg 到Centos服务器上的 /tmp 目录下
+进行上传测试
+/usr/bin/fdfs_test /etc/fdfs/client.conf upload /tmp/test.jpg
+http://192.168.77.129/group1/M00/00/00/wKhNgV-gzbSAbKkWAABEX96zMLA245_big.jpg
+
+9.FastDFS 和Nginx整合
+cd /usr/local/fastdfs-nginx-module/src/
+vi config
+将文件中的所有 /usr/local/ 路径改为 /usr/
+cp mod_fastdfs.conf /etc/fdfs/
+cd /etc/fdfs
+vi mod_fastdfs.conf
+    10  base_path=/home/fastdfs
+    40  tracker_server=x.x.x.x:22122(根据实际情况改)
+    53  url_have_group_name=true #url中包含group名称
+    62  store_path0=/home/fdfs_storage #指定文件存储路径（上面配置的store路径）
+cp /usr/lib64/libfdfsclient.so /usr/lib
+
+10.Nginx 的安装
+yum install -y pcre pcre-devel
+yum install -y zlib zlib-devel
+yum install -y openssl openssl-devel
+mkdir -p /var/temp/nginx/client
+cd /usr/local/nginx-1.8.0/
+./configure \
+--prefix=/usr/local/nginx \
+--pid-path=/var/run/nginx/nginx.pid \
+--lock-path=/var/lock/nginx.lock \
+--error-log-path=/var/log/nginx/error.log \
+--http-log-path=/var/log/nginx/access.log \
+--with-http_gzip_static_module \
+--http-client-body-temp-path=/var/temp/nginx/client \
+--http-proxy-temp-path=/var/temp/nginx/proxy \
+--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
+--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
+--http-scgi-temp-path=/var/temp/nginx/scgi \
+--add-module=/usr/local/fastdfs-nginx-module/src
+make && make install
+mkdir /usr/local/nginx/logs
+vi nginx.conf
+
+11.FastDFS 和 Nginx 开机自启配置
+vi /etc/rc.d/rc.local
+# fastdfs start
+/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf restart
+/usr/bin/fdfs_storaged /etc/fdfs/storage.conf restart
+# nginx start
+/usr/local/nginx/sbin/nginx
+chmod +x /etc/rc.d/rc.local
