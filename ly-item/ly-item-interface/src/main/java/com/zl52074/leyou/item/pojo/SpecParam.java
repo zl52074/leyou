@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @description:
+ * @description: 商品规格组参数
  * @author: zl52074
  * @time: 2020/11/5 16:40
  */
