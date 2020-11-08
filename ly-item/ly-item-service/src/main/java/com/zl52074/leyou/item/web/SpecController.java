@@ -22,7 +22,7 @@ public class SpecController {
     private SpecService specService;
 
     /**
-     * @description 根据分类idd查询该分类下的规格组
+     * @description 根据分类id查询该分类下的规格组
      * @param
      * @return org.springframework.http.ResponseEntity<java.util.List<com.zl52074.leyou.item.pojo.SpecGroup>>
      * @author zl52074
