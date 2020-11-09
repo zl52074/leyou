@@ -3,7 +3,6 @@ package com.zl52074.leyou.item.service.impl;
 import com.zl52074.leyou.common.enums.ExceptionEnum;
 import com.zl52074.leyou.common.exception.LyException;
 import com.zl52074.leyou.item.mapper.CategoryMapper;
-import com.zl52074.leyou.item.pojo.Brand;
 import com.zl52074.leyou.item.pojo.Category;
 import com.zl52074.leyou.item.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +56,22 @@ public class CategoryServiceImpl implements CategoryService {
             example.createCriteria().orIn("id", cids);
         }
         List<Category> categories = categoryMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(categories)){
+            throw new LyException(ExceptionEnum.CATEGORY_NOT_FOUND);
+        }
+        return categories;
+    }
+
+    /**
+     * @description 根据id集合查分类
+     * @param ids
+     * @return java.util.List<com.zl52074.leyou.item.pojo.Category>
+     * @author zl52074
+     * @time 2020/11/9 20:25
+     */
+    @Override
+    public List<Category> queryCategoryById(List<Long> ids) {
+        List<Category> categories = categoryMapper.selectByIdList(ids);
         if(CollectionUtils.isEmpty(categories)){
             throw new LyException(ExceptionEnum.CATEGORY_NOT_FOUND);
         }

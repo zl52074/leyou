@@ -52,4 +52,13 @@ public interface BrandService {
      * @time 2020/11/2 23:06
      */
     public void deleteBrand(Long bid);
+
+    /**
+     * @description 根据id查品牌
+     * @param
+     * @return com.zl52074.leyou.item.pojo.Brand
+     * @author zl52074
+     * @time 2020/11/9 20:43
+     */
+    public Brand queryBrandById(Long id);
 }

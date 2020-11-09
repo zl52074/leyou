@@ -4,6 +4,7 @@ import com.zl52074.leyou.item.pojo.Category;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+import tk.mybatis.mapper.additional.idlist.IdListMapper;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * @time: 2020/10/27 21:22
  */
 @Repository
-public interface CategoryMapper extends Mapper<Category> {
+public interface CategoryMapper extends Mapper<Category>, IdListMapper<Category,Long> {
 
     /**
      * @description 根据品牌id查询分类id

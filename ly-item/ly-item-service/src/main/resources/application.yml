@@ -18,3 +18,4 @@ eureka:
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #通用mapper日志输出sql
+    map-underscore-to-camel-case: true #驼峰转下划线

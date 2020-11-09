@@ -28,4 +28,14 @@ public interface CategoryService {
      * @time 2020/11/2 22:28
      */
     public List<Category> queryCategoryByBid(Long bid);
+
+
+    /**
+     * @description 根据id集合查分类
+     * @param ids
+     * @return java.util.List<com.zl52074.leyou.item.pojo.Category>
+     * @author zl52074
+     * @time 2020/11/9 20:22
+     */
+    public List<Category> queryCategoryById(List<Long> ids);
 }

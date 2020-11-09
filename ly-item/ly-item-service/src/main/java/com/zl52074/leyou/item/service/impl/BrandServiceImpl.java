@@ -143,5 +143,21 @@ public class BrandServiceImpl implements BrandService {
         }
     }
 
+    /**
+     * @description 根据id查品牌
+     * @param id
+     * @return com.zl52074.leyou.item.pojo.Brand
+     * @author zl52074
+     * @time 2020/11/9 20:46
+     */
+    @Override
+    public Brand queryBrandById(Long id) {
+        Brand brand = brandMapper.selectByPrimaryKey(id);
+        if(brand==null){
+            throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
+        }
+        return brand;
+    }
+
 
 }
