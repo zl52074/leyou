@@ -1,6 +1,6 @@
 package com.zl52074.leyou.item.mapper;
 
-import com.zl52074.leyou.item.pojo.Category;
+import com.zl52074.leyou.item.po.Category;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;

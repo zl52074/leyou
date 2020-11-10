@@ -1,4 +1,4 @@
-package com.zl52074.leyou.item.pojo;
+package com.zl52074.leyou.item.po;
 
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;

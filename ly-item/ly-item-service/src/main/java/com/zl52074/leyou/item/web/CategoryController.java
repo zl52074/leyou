@@ -1,7 +1,8 @@
 package com.zl52074.leyou.item.web;
 
-import com.zl52074.leyou.item.pojo.Category;
+import com.zl52074.leyou.item.po.Category;
 import com.zl52074.leyou.item.service.CategoryService;
+import com.zl52074.leyou.item.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

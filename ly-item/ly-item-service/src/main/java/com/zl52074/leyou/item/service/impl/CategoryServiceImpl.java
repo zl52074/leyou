@@ -3,7 +3,7 @@ package com.zl52074.leyou.item.service.impl;
 import com.zl52074.leyou.common.enums.ExceptionEnum;
 import com.zl52074.leyou.common.exception.LyException;
 import com.zl52074.leyou.item.mapper.CategoryMapper;
-import com.zl52074.leyou.item.pojo.Category;
+import com.zl52074.leyou.item.po.Category;
 import com.zl52074.leyou.item.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

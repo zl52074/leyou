@@ -1,7 +1,7 @@
 package com.zl52074.leyou.item.service;
 
 import com.zl52074.leyou.common.pojo.PageResult;
-import com.zl52074.leyou.item.pojo.Brand;
+import com.zl52074.leyou.item.po.Brand;
 
 import java.util.List;
 
@@ -61,4 +61,13 @@ public interface BrandService {
      * @time 2020/11/9 20:43
      */
     public Brand queryBrandById(Long id);
+
+    /**
+     * @description 根据分类id查品牌
+     * @param cid
+     * @return java.util.List<com.zl52074.leyou.item.pojo.Brand>
+     * @author zl52074
+     * @time 2020/11/10 14:12
+     */
+    public List<Brand> queryBrandByCid(Long cid);
 }

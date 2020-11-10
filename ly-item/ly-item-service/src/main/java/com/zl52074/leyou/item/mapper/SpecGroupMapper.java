@@ -1,8 +1,7 @@
 package com.zl52074.leyou.item.mapper;
 
-import com.zl52074.leyou.item.pojo.SpecGroup;
+import com.zl52074.leyou.item.po.SpecGroup;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
 
 /**

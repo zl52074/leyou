@@ -1,10 +1,8 @@
 package com.zl52074.leyou.item.web;
 
 import com.zl52074.leyou.common.pojo.PageResult;
-import com.zl52074.leyou.item.mapper.BrandMapper;
-import com.zl52074.leyou.item.pojo.Brand;
+import com.zl52074.leyou.item.po.Brand;
 import com.zl52074.leyou.item.service.BrandService;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,5 +68,17 @@ public class BrandController {
     public ResponseEntity<Void> deleteBrand(@RequestParam("bid") Long bid){
         brandService.deleteBrand(bid);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    /**
+     * @description 根据id查询品牌
+     * @param cid
+     * @return java.util.List<com.zl52074.leyou.item.pojo.Brand>
+     * @author zl52074
+     * @time 2020/11/10 14:10
+     */
+    @GetMapping("cid/{cid}")
+    public ResponseEntity<List<Brand>> queryBrandByCid(@PathVariable("cid") Long cid){
+        return ResponseEntity.ok(brandService.queryBrandByCid(cid));
     }
 }

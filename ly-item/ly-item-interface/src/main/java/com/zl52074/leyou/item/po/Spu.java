@@ -1,16 +1,22 @@
-package com.zl52074.leyou.item.pojo.vo;
+package com.zl52074.leyou.item.po;
 
 import lombok.Data;
+import tk.mybatis.mapper.annotation.KeySql;
 
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
  * @description:
  * @author: zl52074
- * @time: 2020/11/8 14:48
+ * @time: 2020/11/6 10:43
  */
 @Data
-public class SpuVO {
+@Table(name="tb_spu")
+public class Spu {
+    @Id
+    @KeySql(useGeneratedKeys = true)
     private Long id;
     private Long brandId;
     private Long cid1;//一级分类
@@ -22,6 +28,4 @@ public class SpuVO {
     private Boolean valid;//是否有效，逻辑删除用
     private Date createTime;//创建时间
     private Date lastUpdateTime;//最后修改时间
-    private String cname;
-    private String bname;
 }

@@ -29,7 +29,8 @@ public  enum ExceptionEnum {
     SPEC_PARAM_SAVE_ERROR(500,"规格参数保存失败"),
     SPEC_PARAM_UPDATE_ERROR(500,"规格参数更新失败"),
     SPEC_PARAM_DELETE_ERROR(500,"规格参数删除失败"),
-    GOODS_NOT_FOUND(404,"商品未查到")
+    GOODS_NOT_FOUND(404,"商品未查到"),
+    GOODS_SAVE_ERROR(500,"新增商品失败"),
     ;
     private int code;
     private String msg;

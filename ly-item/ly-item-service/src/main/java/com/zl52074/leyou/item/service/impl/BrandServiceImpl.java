@@ -6,7 +6,7 @@ import com.zl52074.leyou.common.enums.ExceptionEnum;
 import com.zl52074.leyou.common.exception.LyException;
 import com.zl52074.leyou.common.pojo.PageResult;
 import com.zl52074.leyou.item.mapper.BrandMapper;
-import com.zl52074.leyou.item.pojo.Brand;
+import com.zl52074.leyou.item.po.Brand;
 import com.zl52074.leyou.item.service.BrandService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.Base64;
 import java.util.List;
 
 /**
@@ -157,6 +156,18 @@ public class BrandServiceImpl implements BrandService {
             throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
         }
         return brand;
+    }
+
+    /**
+     * @description 根据分类id查询品牌
+     * @param cid
+     * @return java.util.List<com.zl52074.leyou.item.pojo.Brand>
+     * @author zl52074
+     * @time 2020/11/10 14:25
+     */
+    @Override
+    public List<Brand> queryBrandByCid(Long cid) {
+        return brandMapper.selectBrandByCid(cid);
     }
 
 

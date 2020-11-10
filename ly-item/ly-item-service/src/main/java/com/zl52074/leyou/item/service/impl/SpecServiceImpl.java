@@ -4,8 +4,8 @@ import com.zl52074.leyou.common.enums.ExceptionEnum;
 import com.zl52074.leyou.common.exception.LyException;
 import com.zl52074.leyou.item.mapper.SpecGroupMapper;
 import com.zl52074.leyou.item.mapper.SpecParamMapper;
-import com.zl52074.leyou.item.pojo.SpecGroup;
-import com.zl52074.leyou.item.pojo.SpecParam;
+import com.zl52074.leyou.item.po.SpecGroup;
+import com.zl52074.leyou.item.po.SpecParam;
 import com.zl52074.leyou.item.service.SpecService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,17 +91,22 @@ public class SpecServiceImpl implements SpecService {
         }
     }
 
+
     /**
-     * @description 根据规格组id查询规格参数
+     * @description 根据条件查询规格参数
      * @param gid
+     * @param cid
+     * @param searching
      * @return java.util.List<com.zl52074.leyou.item.pojo.SpecParam>
      * @author zl52074
-     * @time 2020/11/5 16:59
+     * @time 2020/11/10 15:00
      */
     @Override
-    public List<SpecParam> querySpecParamByGid(Long gid) {
+    public List<SpecParam> querySpecParamList(Long gid,Long cid,Boolean searching) {
         SpecParam specParam = new SpecParam();
         specParam.setGroupId(gid);
+        specParam.setCid(cid);
+        specParam.setSearching(searching);
         List<SpecParam> specParams = specParamMapper.select(specParam);
         if(CollectionUtils.isEmpty(specParams)){
             throw new LyException(ExceptionEnum.SPEC_PARAMS_NOT_FOUND);
@@ -155,4 +160,5 @@ public class SpecServiceImpl implements SpecService {
             throw new LyException(ExceptionEnum.SPEC_PARAM_DELETE_ERROR);
         }
     }
+
 }

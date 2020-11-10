@@ -1,7 +1,7 @@
 package com.zl52074.leyou.item.service;
 
-import com.zl52074.leyou.item.pojo.SpecGroup;
-import com.zl52074.leyou.item.pojo.SpecParam;
+import com.zl52074.leyou.item.po.SpecGroup;
+import com.zl52074.leyou.item.po.SpecParam;
 
 import java.util.List;
 
@@ -49,13 +49,15 @@ public interface SpecService {
     public void deleteSpecGroup(Long cid);
 
     /**
-     * @description 根据规格组id查询规格参数
-     * @param gid
+     * @description 根据条件查询规格参数
+     * @param gid 规格组id
+     * @param cid 分类id
+     * @param searching 是否用作查询
      * @return java.util.List<com.zl52074.leyou.item.pojo.SpecParam>
      * @author zl52074
-     * @time 2020/11/5 16:55
+     * @time 2020/11/10 15:00
      */
-    public List<SpecParam> querySpecParamByGid(Long gid);
+    public List<SpecParam> querySpecParamList(Long gid,Long cid,Boolean searching);
 
     /**
      * @description 保存规格参数

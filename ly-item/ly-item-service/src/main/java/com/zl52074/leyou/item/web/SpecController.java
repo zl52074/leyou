@@ -1,7 +1,7 @@
 package com.zl52074.leyou.item.web;
 
-import com.zl52074.leyou.item.pojo.SpecGroup;
-import com.zl52074.leyou.item.pojo.SpecParam;
+import com.zl52074.leyou.item.po.SpecGroup;
+import com.zl52074.leyou.item.po.SpecParam;
 import com.zl52074.leyou.item.service.SpecService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -80,8 +80,11 @@ public class SpecController {
      * @time 2020/11/5 16:54
      */
     @GetMapping("params")
-    public ResponseEntity<List<SpecParam>> querySpecParamByGid(@RequestParam("gid") Long gid){
-        return ResponseEntity.ok(specService.querySpecParamByGid(gid));
+    public ResponseEntity<List<SpecParam>> querySpecParamList(@RequestParam(value = "gid",required = false) Long gid,
+                                                          @RequestParam(value = "cid",required = false) Long cid,
+                                                          @RequestParam(value = "searching",required = false)Boolean searching
+    ){
+        return ResponseEntity.ok(specService.querySpecParamList(gid,cid,searching));
     }
 
     /**

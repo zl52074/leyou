@@ -1,6 +1,6 @@
 package com.zl52074.leyou.item.mapper;
 
-import com.zl52074.leyou.item.pojo.SpecParam;
+import com.zl52074.leyou.item.po.SpecParam;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
