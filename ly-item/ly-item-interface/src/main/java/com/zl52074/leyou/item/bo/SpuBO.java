@@ -2,6 +2,7 @@ package com.zl52074.leyou.item.bo;
 
 import com.zl52074.leyou.item.po.Spu;
 import com.zl52074.leyou.item.po.SpuDetail;
+import com.zl52074.leyou.item.vo.SkuVO;
 import lombok.Data;
 
 import java.util.List;
@@ -14,5 +15,5 @@ import java.util.List;
 @Data
 public class SpuBO extends Spu {
     private SpuDetail spuDetail;
-    private List<SkuBO> skus;
+    private List<SkuVO> skus;
 }

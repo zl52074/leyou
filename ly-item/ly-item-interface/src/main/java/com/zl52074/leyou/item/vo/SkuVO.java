@@ -1,4 +1,4 @@
-package com.zl52074.leyou.item.bo;
+package com.zl52074.leyou.item.vo;
 
 import com.zl52074.leyou.item.po.Sku;
 import lombok.Data;
@@ -9,6 +9,6 @@ import lombok.Data;
  * @time: 2020/11/10 16:21
  */
 @Data
-public class SkuBO extends Sku {
+public class SkuVO extends Sku {
     private Integer stock;
 }
