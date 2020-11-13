@@ -58,12 +58,27 @@ public class BrandController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * @description 更新品牌
+     * @param brand
+     * @param cids
+     * @return org.springframework.http.ResponseEntity<java.lang.Void>
+     * @author zl52074
+     * @time 2020/11/13 17:26
+     */
     @PutMapping
     public ResponseEntity<Void> updateBrand(Brand brand,@RequestParam("cids") List<Long> cids){
         brandService.updateBrand(brand, cids);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * @description 删除品牌
+     * @param bid
+     * @return org.springframework.http.ResponseEntity<java.lang.Void>
+     * @author zl52074
+     * @time 2020/11/13 17:26
+     */
     @DeleteMapping
     public ResponseEntity<Void> deleteBrand(@RequestParam("bid") Long bid){
         brandService.deleteBrand(bid);
@@ -71,7 +86,7 @@ public class BrandController {
     }
 
     /**
-     * @description 根据id查询品牌
+     * @description 根据分类id查询品牌
      * @param cid
      * @return java.util.List<com.zl52074.leyou.item.pojo.Brand>
      * @author zl52074
@@ -80,5 +95,17 @@ public class BrandController {
     @GetMapping("cid/{cid}")
     public ResponseEntity<List<Brand>> queryBrandByCid(@PathVariable("cid") Long cid){
         return ResponseEntity.ok(brandService.queryBrandByCid(cid));
+    }
+
+    /**
+     * @description 根据品牌id查询品牌
+     * @param id
+     * @return org.springframework.http.ResponseEntity<com.zl52074.leyou.item.po.Brand>
+     * @author zl52074
+     * @time 2020/11/13 17:31
+     */
+    @GetMapping("id/{id}")
+    public ResponseEntity<Brand> queryBrandById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(brandService.queryBrandById(id));
     }
 }

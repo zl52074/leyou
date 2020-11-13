@@ -47,6 +47,18 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.queryCategoryByBid(bid));
     }
 
+    /**
+     * @description 根据id查找分类集合
+     * @param ids
+     * @return org.springframework.http.ResponseEntity<java.util.List<com.zl52074.leyou.item.po.Category>>
+     * @author zl52074
+     * @time 2020/11/13 17:24
+     */
+    @GetMapping("list/cids")
+    public ResponseEntity<List<Category>> queryCategoryByIds(@RequestParam("cids") List<Long> ids){
+        return ResponseEntity.ok(categoryService.queryCategoryByIds(ids));
+    }
+
 
 
 }

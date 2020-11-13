@@ -37,5 +37,5 @@ public interface CategoryService {
      * @author zl52074
      * @time 2020/11/9 20:22
      */
-    public List<Category> queryCategoryById(List<Long> ids);
+    public List<Category> queryCategoryByIds(List<Long> ids);
 }

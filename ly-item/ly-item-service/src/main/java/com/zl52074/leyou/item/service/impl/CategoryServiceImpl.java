@@ -70,7 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @time 2020/11/9 20:25
      */
     @Override
-    public List<Category> queryCategoryById(List<Long> ids) {
+    public List<Category> queryCategoryByIds(List<Long> ids) {
         List<Category> categories = categoryMapper.selectByIdList(ids);
         if(CollectionUtils.isEmpty(categories)){
             throw new LyException(ExceptionEnum.CATEGORY_NOT_FOUND);
