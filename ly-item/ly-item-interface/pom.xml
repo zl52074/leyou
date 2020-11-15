@@ -12,10 +12,10 @@
     <artifactId>ly-item-interface</artifactId>
 
     <dependencies>
-        <!--通用mapper-->
         <dependency>
             <groupId>tk.mybatis</groupId>
-            <artifactId>mapper-spring-boot-starter</artifactId>
+            <artifactId>mapper-core</artifactId>
+            <version>1.0.4</version>
         </dependency>
     </dependencies>
 
