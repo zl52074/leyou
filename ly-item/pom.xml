@@ -15,6 +15,7 @@
     <modules>
         <module>ly-item-interface</module>
         <module>ly-item-service</module>
+        <module>ly-item-api</module>
     </modules>
     <dependencies>
         <dependency>
