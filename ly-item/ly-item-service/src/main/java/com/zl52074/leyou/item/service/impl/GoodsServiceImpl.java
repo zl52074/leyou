@@ -79,6 +79,32 @@ public class GoodsServiceImpl implements GoodsService {
         return new PageResult<SpuVO>(info.getTotal(),spuVOs);
     }
 
+    @Override
+    public PageResult<Spu> querySpuOnlyByPage(Integer page, Integer rows, Boolean saleable, String key) {
+        //分页
+        if(rows!=-1){
+            PageHelper.startPage(page,rows);
+        }
+        //过滤 这里用 andLike
+        Example example = new Example(Spu.class);
+        if(StringUtils.isNotBlank(key)){
+            example.createCriteria().andLike("title", "%"+key+"%");
+        }
+        if(saleable!=null){
+            example.createCriteria().andEqualTo("saleable",saleable);
+        }
+        //默认排序
+        example.setOrderByClause("last_update_time DESC");
+        //查询
+        List<Spu> spus = spuMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(spus)){
+            throw new LyException(ExceptionEnum.GOODS_NOT_FOUND);
+        }
+        //解析分页结果
+        PageInfo info = new PageInfo(spus);
+        return new PageResult<Spu>(info.getTotal(),spus);
+    }
+
 
     /**
      * @description 将spu中的分类id转换成中文名称
@@ -230,6 +256,24 @@ public class GoodsServiceImpl implements GoodsService {
         //遍历skuVO列表 根据id从map中取值并setStock
         skuVOS.forEach(skuVO -> skuVO.setStock(stockMap.get(skuVO.getId())));
         return skuVOS;
+    }
+
+    /**
+     * @description 查询sku不包含库存
+     * @param spuId
+     * @return java.util.List<com.zl52074.leyou.item.po.Sku>
+     * @author zl52074
+     * @time 2020/11/17 15:51
+     */
+    @Override
+    public List<Sku> querySkuOnlyBySpuId(Long spuId) {
+        Sku sku = new Sku();
+        sku.setSpuId(spuId);
+        List<Sku> skus = skuMapper.select(sku);
+        if(CollectionUtils.isEmpty(skus)){
+            throw new LyException(ExceptionEnum.GOODS_SKU_NOT_FOUND);
+        }
+        return skus;
     }
 
 

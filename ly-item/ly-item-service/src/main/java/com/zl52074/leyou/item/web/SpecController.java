@@ -73,7 +73,7 @@ public class SpecController {
     }
 
     /**
-     * @description 根据规格组id查询规格参数
+     * @description 根据条件查询规格参数
      * @param gid
      * @return org.springframework.http.ResponseEntity<java.util.List<com.zl52074.leyou.item.pojo.SpecParam>>
      * @author zl52074

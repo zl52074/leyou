@@ -2,6 +2,7 @@ package com.zl52074.leyou.item.web;
 
 import com.zl52074.leyou.common.pojo.PageResult;
 import com.zl52074.leyou.item.bo.SpuBO;
+import com.zl52074.leyou.item.po.Sku;
 import com.zl52074.leyou.item.po.Spu;
 import com.zl52074.leyou.item.po.SpuDetail;
 import com.zl52074.leyou.item.vo.SkuVO;
@@ -35,13 +36,33 @@ public class GoodsController {
      * @time 2020/11/10 17:37
      */
     @GetMapping("spu/page")
-    public ResponseEntity<PageResult<SpuVO>> queryBrandByPage(
+    public ResponseEntity<PageResult<SpuVO>> querySpuByPage(
             @RequestParam(value = "page",defaultValue = "1") Integer page,
             @RequestParam(value = "rows",defaultValue = "5") Integer rows,
             @RequestParam(value = "saleable",required = false) Boolean saleable,
             @RequestParam(value = "key",required = false) String key
     ){
         return ResponseEntity.ok(goodsService.querySpuByPage(page,rows,saleable,key));
+    }
+
+    /**
+     * @description 分页仅仅查询spu
+     * @param page
+     * @param rows
+     * @param saleable
+     * @param key
+     * @return org.springframework.http.ResponseEntity<com.zl52074.leyou.common.pojo.PageResult<com.zl52074.leyou.item.vo.SpuVO>>
+     * @author zl52074
+     * @time 2020/11/10 17:37
+     */
+    @GetMapping("spu/only/page")
+    public ResponseEntity<PageResult<Spu>> querySpuOnlyByPage(
+            @RequestParam(value = "page",defaultValue = "1") Integer page,
+            @RequestParam(value = "rows",defaultValue = "5") Integer rows,
+            @RequestParam(value = "saleable",required = false) Boolean saleable,
+            @RequestParam(value = "key",required = false) String key
+    ){
+        return ResponseEntity.ok(goodsService.querySpuOnlyByPage(page,rows,saleable,key));
     }
 
     /**
@@ -120,6 +141,11 @@ public class GoodsController {
     public ResponseEntity<Void> deleteGoods(@RequestParam("spuId") Long spuId){
         goodsService.deleteGoodsBySpuId(spuId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @GetMapping("sku/only/List")
+    public ResponseEntity<List<Sku>> querySkuBySpuIdWithoutStock(@RequestParam("id") Long spuId){
+        return ResponseEntity.ok(goodsService.querySkuOnlyBySpuId(spuId));
     }
 
 }
