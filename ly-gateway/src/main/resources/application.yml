@@ -19,6 +19,10 @@ zuul:
     upload-service:
       path: /upload/**
       serviceId: upload-service
+      strip-prefix: false #去除前缀：否
+    search-service:
+      path: /search/**
+      serviceId: search-service
       strip-prefix: false
 hystrix:
   command:

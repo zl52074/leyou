@@ -46,6 +46,11 @@ public class GoodsRepositoryTest {
     }
 
     @Test
+    public void testDelete(){
+        elasticsearchTemplate.deleteIndex(Goods.class);
+    }
+
+    @Test
     public void loadData(){
         int page = 1;
         int rows = 100;
@@ -65,6 +70,5 @@ public class GoodsRepositoryTest {
             page++;
             size = spus.size();
         }while (size==100);
-
     }
 }
