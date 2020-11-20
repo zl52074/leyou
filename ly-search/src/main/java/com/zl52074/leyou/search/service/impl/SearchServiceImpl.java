@@ -125,7 +125,7 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public PageResult<Goods> search(SearchRequest searchRequest) {
-        int page = searchRequest.getPage();
+        int page = searchRequest.getPage()-1; //ES分页从下标0开始
         int size = searchRequest.getSize();
         //创建查询构造器
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
