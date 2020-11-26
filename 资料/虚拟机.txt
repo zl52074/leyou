@@ -116,3 +116,6 @@ vi /etc/rc.d/rc.local
 # nginx start
 /usr/local/nginx/sbin/nginx
 chmod +x /etc/rc.d/rc.local
+
+
+///测试
