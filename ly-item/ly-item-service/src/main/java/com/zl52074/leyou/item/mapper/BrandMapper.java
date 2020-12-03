@@ -1,5 +1,6 @@
 package com.zl52074.leyou.item.mapper;
 
+import com.zl52074.leyou.common.mapper.LyBaseMapper;
 import com.zl52074.leyou.item.po.Brand;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -16,7 +17,7 @@ import java.util.List;
  * @time: 2020/10/29 14:21
  */
 @Repository
-public interface BrandMapper extends Mapper<Brand> {
+public interface BrandMapper extends LyBaseMapper<Brand,Long> {
 
     /**
      * @description 插入品牌分类关系中间表

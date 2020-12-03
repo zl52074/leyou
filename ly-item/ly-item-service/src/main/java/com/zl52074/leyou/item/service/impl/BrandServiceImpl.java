@@ -167,7 +167,27 @@ public class BrandServiceImpl implements BrandService {
      */
     @Override
     public List<Brand> queryBrandByCid(Long cid) {
-        return brandMapper.selectBrandByCid(cid);
+        List<Brand> brands = brandMapper.selectBrandByCid(cid);
+        if(CollectionUtils.isEmpty(brands)){
+            throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
+        }
+        return brands;
+    }
+
+    /**
+     * @description 根据id集合获取brand
+     * @param ids
+     * @return java.util.List<com.zl52074.leyou.item.po.Brand>
+     * @author zl52074
+     * @time 2020/12/1 15:20
+     */
+    @Override
+    public List<Brand> queryBrandByIds(List<Long> ids) {
+        List<Brand> brands = brandMapper.selectByIdList(ids);
+        if(CollectionUtils.isEmpty(brands)){
+            throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
+        }
+        return brands;
     }
 
 

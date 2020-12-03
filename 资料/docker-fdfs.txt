@@ -1,0 +1,6 @@
+docker run -dti --network=host --name fdfs-tracker -v /home/fdfs/tracker:/var/fdfs  delron/fastdfs  tracker
+docker run -dti --network=host --name fdfs-storage -e TRACKER_SERVER=172.19.214.85:22122 -v /home/fdfs/storage:/var/fdfs delron/fastdfs storage
+docker exec -it fdfs-storage /bin/bash
+cd /var/fdfs
+ /usr/bin/fdfs_upload_file /etc/fdfs/client.conf test.jpg
+http://localhost:8888/group1/M00/00/00/rBPWVV--PtuAGtRYAACddJeJ4ik675.jpg

@@ -4,6 +4,7 @@ import com.zl52074.leyou.common.pojo.PageResult;
 import com.zl52074.leyou.item.po.Spu;
 import com.zl52074.leyou.search.pojo.Goods;
 import com.zl52074.leyou.search.pojo.SearchRequest;
+import com.zl52074.leyou.search.pojo.SearchResult;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -28,5 +29,5 @@ public interface SearchService {
      * @author zl52074
      * @time 2020/11/19 9:54
      */
-    PageResult<Goods> search(SearchRequest searchRequest);
+    SearchResult search(SearchRequest searchRequest);
 }

@@ -70,4 +70,13 @@ public interface BrandService {
      * @time 2020/11/10 14:12
      */
     public List<Brand> queryBrandByCid(Long cid);
+
+    /**
+     * @description 根据id集合获取brand
+     * @param ids
+     * @return java.util.List<com.zl52074.leyou.item.po.Brand>
+     * @author zl52074
+     * @time 2020/12/1 15:20
+     */
+    List<Brand> queryBrandByIds(List<Long> ids);
 }
