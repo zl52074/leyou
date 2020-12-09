@@ -143,9 +143,40 @@ public class GoodsController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
+    /**
+     * @description 根据spuId仅获取不含库存信息的sku
+     * @param spuId
+     * @return org.springframework.http.ResponseEntity<java.util.List<com.zl52074.leyou.item.po.Sku>>
+     * @author zl52074
+     * @time 2020/12/3 16:48
+     */
     @GetMapping("sku/only/List")
     public ResponseEntity<List<Sku>> querySkuBySpuIdWithoutStock(@RequestParam("id") Long spuId){
         return ResponseEntity.ok(goodsService.querySkuOnlyBySpuId(spuId));
+    }
+
+    /**
+     * @description 获取单条SpuBO信息
+     * @param id spuid
+     * @return com.zl52074.leyou.item.vo.SpuVO
+     * @author zl52074
+     * @time 2020/12/3 16:53
+     */
+    @GetMapping("item/{id}")
+    public ResponseEntity<SpuBO> queryItemById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(goodsService.queryItemById(id));
+    }
+
+    /**
+     * @description 根据id单查spu
+     * @param id spuId
+     * @return com.zl52074.leyou.item.po.Spu
+     * @author zl52074
+     * @time 2020/12/8 16:35
+     */
+    @GetMapping("spu/only/{id}")
+    public ResponseEntity<Spu> querySpuOnlyById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(goodsService.querySpuOnlyById(id));
     }
 
 }

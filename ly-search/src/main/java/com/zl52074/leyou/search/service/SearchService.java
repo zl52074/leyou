@@ -30,4 +30,22 @@ public interface SearchService {
      * @time 2020/11/19 9:54
      */
     SearchResult search(SearchRequest searchRequest);
+
+    /**
+     * @description 根据spuId重建索引
+     * @param spuId
+     * @return void
+     * @author zl52074
+     * @time 2020/12/8 16:22
+     */
+    void createOrUpdateIndex(Long spuId);
+
+    /**
+     * @description 根据id删除索引
+     * @param
+     * @return void
+     * @author zl52074
+     * @time 2020/12/8 17:08
+     */
+    void deleteIndex(Long spuId);
 }

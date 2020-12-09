@@ -3,6 +3,7 @@ package com.zl52074.leyou.common.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zl52074.leyou.common.enums.ExceptionEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
@@ -21,6 +22,11 @@ public class JsonUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JsonUtils.class);
 
+    /**
+     * @description 对象序列化为json字符串
+     * @param obj
+     * @return java.lang.String
+     */
     @Nullable
     public static String serialize(Object obj) {
         if (obj == null) {

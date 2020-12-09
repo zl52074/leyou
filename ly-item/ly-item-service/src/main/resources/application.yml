@@ -8,6 +8,19 @@ spring:
     url: jdbc:mysql://localhost:3306/leyou
     username: root
     password: root
+  rabbitmq:
+    host: localhost
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+    template:
+      retry:
+        enabled: true #启用重试
+        initial-interval: 10000ms #第一次失败重试周期
+        max-interval: 30000ms #最大重试周期
+        multiplier: 2 #重试时间倍数
+      exchange: ly.item.exchange
+    publisher-confirms: true #发送者确认，失败可开启重试
 
 eureka:
   client:

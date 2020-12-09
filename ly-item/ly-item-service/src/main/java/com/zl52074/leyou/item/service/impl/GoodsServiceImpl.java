@@ -12,7 +12,10 @@ import com.zl52074.leyou.item.bo.SpuBO;
 import com.zl52074.leyou.item.vo.SpuVO;
 import com.zl52074.leyou.item.service.BrandService;
 import com.zl52074.leyou.item.service.GoodsService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,7 @@ import java.util.stream.Collectors;
  * @author: zl52074
  * @time: 2020/11/8 14:27
  */
+@Slf4j
 @Service
 public class GoodsServiceImpl implements GoodsService {
 
@@ -43,7 +47,19 @@ public class GoodsServiceImpl implements GoodsService {
     private CategoryMapper categoryMapper;
     @Autowired
     private BrandService brandService;
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
+    /**
+     * @description 分页查spu
+     * @param page 页码
+     * @param rows 每页条数
+     * @param saleable 是否上架
+     * @param key 查询关键字
+     * @return com.zl52074.leyou.common.pojo.PageResult<com.zl52074.leyou.item.vo.SpuVO>
+     * @author zl52074
+     * @time 2020/12/8 14:23
+     */
     @Override
     public PageResult<SpuVO> querySpuByPage(Integer page, Integer rows, Boolean saleable, String key) {
         //分页
@@ -79,6 +95,16 @@ public class GoodsServiceImpl implements GoodsService {
         return new PageResult<SpuVO>(info.getTotal(),spuVOs);
     }
 
+    /**
+     * @description 单独查spu
+     * @param page 页码
+     * @param rows 每页条数
+     * @param saleable 是否上架
+     * @param key 查询关键字
+     * @return com.zl52074.leyou.common.pojo.PageResult<com.zl52074.leyou.item.po.Spu>
+     * @author zl52074
+     * @time 2020/12/8 14:25
+     */
     @Override
     public PageResult<Spu> querySpuOnlyByPage(Integer page, Integer rows, Boolean saleable, String key) {
         //分页
@@ -121,7 +147,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     /**
-     * @description 保存商品信息
+     * @description 保存商品信息，新增
      * @param
      * @return void
      * @author zl52074
@@ -150,6 +176,12 @@ public class GoodsServiceImpl implements GoodsService {
             throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
         }
         saveSkuAndStock(spuBO, spu);
+        //发送mq消息,消息内容发送新增spu的id
+        try {
+            amqpTemplate.convertAndSend("item.insert", spuBO.getId());
+        } catch (AmqpException e) {
+            log.error("【发送消息异常】",e); //单独try catch异常防止异常传递到上层
+        }
     }
 
     /**
@@ -309,6 +341,12 @@ public class GoodsServiceImpl implements GoodsService {
         }
         //重新添加sku和skuStock
         saveSkuAndStock(spuBO, spu);
+        //发送mq消息,消息内容发送修改的的spu的id
+        try {
+            amqpTemplate.convertAndSend("item.update", spuBO.getId());
+        } catch (AmqpException e) {
+            log.error("【发送消息异常】",e);
+        }
     }
 
 
@@ -330,6 +368,21 @@ public class GoodsServiceImpl implements GoodsService {
         if(count!=1){
             throw new LyException(ExceptionEnum.GOODS_SPU_UPDATE_ERROR);
         }
+        if(spu.getSaleable()){
+            //发送mq消息,消息内容发送要更新的spu的id
+            try {
+                amqpTemplate.convertAndSend("item.update", spu.getId());
+            } catch (AmqpException e) {
+                log.error("【发送消息异常】",e);
+            }
+        }else{
+            //发送mq消息,消息内容发送要删除的spu的id
+            try {
+                amqpTemplate.convertAndSend("item.delete", spu.getId());
+            } catch (AmqpException e) {
+                log.error("【发送消息异常】",e);
+            }
+        }
     }
 
     /**
@@ -346,14 +399,62 @@ public class GoodsServiceImpl implements GoodsService {
         deleteSkuAndStock(spuId);
         //删除spuDetail
         int count = spuDetailMapper.deleteByPrimaryKey(spuId);
-        if(count!=1){
-            throw new LyException(ExceptionEnum.GOODS_DELETE_ERROR);
-        }
+//        if(count!=1){
+//            throw new LyException(ExceptionEnum.GOODS_DELETE_ERROR);
+//        }
         //删除spu
         count = spuMapper.deleteByPrimaryKey(spuId);
-        if(count!=1){
-            throw new LyException(ExceptionEnum.GOODS_DELETE_ERROR);
+//        if(count!=1){
+//            throw new LyException(ExceptionEnum.GOODS_DELETE_ERROR);
+//        }
+//        发送mq消息,消息内容发送要删除的spu的id
+        try {
+            amqpTemplate.convertAndSend("item.delete", spuId);
+        } catch (AmqpException e) {
+            log.error("【发送消息异常】",e);
         }
+    }
+
+    /**
+     * @description 获取单条商品item
+     * @param id
+     * @return com.zl52074.leyou.item.bo.SpuBO
+     * @author zl52074
+     * @time 2020/12/3 17:43
+     */
+    @Override
+    public SpuBO queryItemById(Long id) {
+        Spu s = new Spu();
+        s.setId(id);
+        //查询spu
+        Spu spu = spuMapper.selectByPrimaryKey(s);
+        SpuBO spuBO = new SpuBO();
+        BeanUtils.copyProperties(spu,spuBO);
+        //查询sku
+        List<SkuVO> skuVOS = querySkuBySpuId(id);
+        //查询spuDetail
+        SpuDetail spuDetail = querySpuDetailBySpuId(id);
+        spuBO.setSkus(skuVOS);
+        spuBO.setSpuDetail(spuDetail);
+        return spuBO;
+    }
+
+    /**
+     * @description 根据id单查spu
+     * @param id spuId
+     * @return com.zl52074.leyou.item.po.Spu
+     * @author zl52074
+     * @time 2020/12/8 16:35
+     */
+    public Spu querySpuOnlyById(Long id){
+        Spu s = new Spu();
+        s.setId(id);
+        Spu spu = spuMapper.selectByPrimaryKey(s);
+        if(spu==null){
+            throw new LyException(ExceptionEnum.GOODS_SPU_NOT_FOUND);
+        }
+        System.out.println(spu);
+        return spu;
     }
 
 }

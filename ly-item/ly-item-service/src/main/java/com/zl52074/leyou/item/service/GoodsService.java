@@ -105,4 +105,21 @@ public interface GoodsService {
     public void deleteGoodsBySpuId(Long spuId);
 
 
+    /**
+     * @description 根据id查询单条商品信息
+     * @param id
+     * @return com.zl52074.leyou.item.bo.SpuBO
+     * @author zl52074
+     * @time 2020/12/8 16:36
+     */
+    SpuBO queryItemById(Long id);
+
+    /**
+     * @description 根据id单查spu
+     * @param id spuId
+     * @return com.zl52074.leyou.item.po.Spu
+     * @author zl52074
+     * @time 2020/12/8 16:35
+     */
+    public Spu querySpuOnlyById(Long id);
 }

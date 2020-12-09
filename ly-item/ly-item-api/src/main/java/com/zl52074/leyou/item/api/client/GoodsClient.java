@@ -1,15 +1,14 @@
 package com.zl52074.leyou.item.api.client;
 
 import com.zl52074.leyou.common.pojo.PageResult;
+import com.zl52074.leyou.item.bo.SpuBO;
 import com.zl52074.leyou.item.po.Sku;
 import com.zl52074.leyou.item.po.Spu;
 import com.zl52074.leyou.item.po.SpuDetail;
 import com.zl52074.leyou.item.vo.SpuVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,4 +51,24 @@ public interface GoodsClient {
             @RequestParam(value = "saleable",required = false) Boolean saleable,
             @RequestParam(value = "key",required = false) String key
     );
+
+    /**
+     * @description 获取单条SpuBO信息
+     * @param id spuid
+     * @return com.zl52074.leyou.item.vo.SpuVO
+     * @author zl52074
+     * @time 2020/12/3 16:53
+     */
+    @GetMapping("item/{id}")
+    public SpuBO queryItemById(@PathVariable("id") Long id);
+
+    /**
+     * @description 根据id单查spu
+     * @param id spuId
+     * @return com.zl52074.leyou.item.po.Spu
+     * @author zl52074
+     * @time 2020/12/8 16:35
+     */
+    @GetMapping("spu/only/{id}")
+    public Spu querySpuOnlyById(@PathVariable("id") Long id);
 }

@@ -2,16 +2,22 @@ package com.zl52074.leyou.item.service.impl;
 
 import com.zl52074.leyou.common.enums.ExceptionEnum;
 import com.zl52074.leyou.common.exception.LyException;
+import com.zl52074.leyou.item.bo.SpecGroupBO;
+import com.zl52074.leyou.item.bo.SpuBO;
 import com.zl52074.leyou.item.mapper.SpecGroupMapper;
 import com.zl52074.leyou.item.mapper.SpecParamMapper;
 import com.zl52074.leyou.item.po.SpecGroup;
 import com.zl52074.leyou.item.po.SpecParam;
 import com.zl52074.leyou.item.service.SpecService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description: 规格管理service
@@ -159,6 +165,42 @@ public class SpecServiceImpl implements SpecService {
         if(count != 1){
             throw new LyException(ExceptionEnum.SPEC_PARAM_DELETE_ERROR);
         }
+    }
+
+    /**
+     * @description 根据分类查询规格组和规格组参数
+     * @param cid 分类id
+     * @return java.util.List<com.zl52074.leyou.item.bo.SpecGroupBO>
+     * @author zl52074
+     * @time 2020/12/3 17:55
+     */
+    @Override
+    public List<SpecGroupBO> querySpecsByCid(Long cid) {
+        //查询当前分类下规格组列表
+        List<SpecGroup> specGroups = querySpecGroupByCid(cid);
+        //查询当前分类下规格参数列表
+        List<SpecParam> specParams = querySpecParamList(null, cid,null);
+        //根据gid将参数归类到map
+        Map<Long,List<SpecParam>> map = new HashMap<>();
+        for(SpecParam specParam:specParams){
+            if(!map.containsKey(specParam.getGroupId())){
+                //如果当前param的gid不在map中,则map中加入新的gid作为key
+                map.put(specParam.getGroupId(),new ArrayList<>());
+            }
+            //根据gid从map中取值，往值的集合中add新的元素
+            map.get(specParam.getGroupId()).add(specParam);
+        }
+        //转化group至groupBO,填充param
+        List<SpecGroupBO> specGroupBOS = new ArrayList<>();
+        for(SpecGroup specGroup:specGroups){
+            SpecGroupBO specGroupBO = new SpecGroupBO();
+            //转换
+            BeanUtils.copyProperties(specGroup,specGroupBO);
+            //填充
+            specGroupBO.setParams(map.get(specGroupBO.getId()));
+            specGroupBOS.add(specGroupBO);
+        }
+        return specGroupBOS;
     }
 
 }

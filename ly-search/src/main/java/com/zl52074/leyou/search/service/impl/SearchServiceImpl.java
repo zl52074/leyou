@@ -190,6 +190,35 @@ public class SearchServiceImpl implements SearchService {
         return new SearchResult(total,totalPages,goods,categories,brands,specs);
     }
 
+    /**
+     * @description 根据spuId重建索引
+     * @param spuId
+     * @return void
+     * @author zl52074
+     * @time 2020/12/8 16:23
+     */
+    @Override
+    public void createOrUpdateIndex(Long spuId) {
+        Spu spu =goodsClient.querySpuOnlyById(spuId);
+        //当状态为上架 构建索引库,索引重复会自动覆盖
+        if(spu.getSaleable()){
+            Goods goods = buildGoods(spu);
+            goodsRepository.save(goods);
+        }
+    }
+
+    /**
+     * @description 根据id删除索引
+     * @param spuId
+     * @return void
+     * @author zl52074
+     * @time 2020/12/8 17:12
+     */
+    @Override
+    public void deleteIndex(Long spuId) {
+        goodsRepository.deleteById(spuId);
+    }
+
     private QueryBuilder buildBasicQuery(SearchRequest searchRequest) {
         //创建布尔查询
         BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();

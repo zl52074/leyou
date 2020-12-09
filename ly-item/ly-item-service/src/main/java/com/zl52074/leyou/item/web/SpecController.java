@@ -1,5 +1,6 @@
 package com.zl52074.leyou.item.web;
 
+import com.zl52074.leyou.item.bo.SpecGroupBO;
 import com.zl52074.leyou.item.po.SpecGroup;
 import com.zl52074.leyou.item.po.SpecParam;
 import com.zl52074.leyou.item.service.SpecService;
@@ -124,5 +125,17 @@ public class SpecController {
     public ResponseEntity<Void> deleteSpecParam(@PathVariable("pid") Long id){
         specService.deleteSpecParam(id);
         return ResponseEntity.ok().build();
+    }
+
+    /**
+     * @description 根据分类查询规格组和规格组参数
+     * @param cid 分类id
+     * @return org.springframework.http.ResponseEntity<java.util.List<com.zl52074.leyou.item.bo.SpecGroupBO>>
+     * @author zl52074
+     * @time 2020/12/3 17:53
+     */
+    @GetMapping("{cid}")
+    public ResponseEntity<List<SpecGroupBO>> querySpecsByCid(@PathVariable("cid") Long cid){
+        return ResponseEntity.ok(specService.querySpecsByCid(cid));
     }
 }

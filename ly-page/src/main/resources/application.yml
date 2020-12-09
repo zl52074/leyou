@@ -1,14 +1,10 @@
 server:
-  port: 8083
+  port: 8084
 spring:
   application:
-    name: search-service
-  data:
-    elasticsearch:
-      cluster-name: elasticsearch
-      cluster-nodes: localhost:9300
-  jackson:
-    default-property-inclusion: non_null #排除为null的属性
+    name: page-service
+  thymeleaf:
+    cache: false #关闭thymeleaf cache
   rabbitmq:
     host: localhost
     username: leyou
@@ -19,8 +15,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
-  instance:
-    lease-renewal-interval-in-seconds: 5 # 每隔5秒发送一次心跳
 ribbon:
   ConnectionTimeout: 500
   ReadTimeout: 6000
