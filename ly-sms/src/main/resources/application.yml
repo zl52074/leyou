@@ -1,0 +1,27 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: sms-service
+  rabbitmq:
+    host: localhost
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+  redis:
+    database: 0
+    host: localhost # Redis服务器地址
+    port: 6379 # Redis服务器连接端口
+    timeout: 10000 # 连接超时时间（毫秒）
+    jedis:
+      pool:
+        max-active: 50
+        max-wait: 5000
+        max-idle: 50
+        min-idle: 0
+ly:
+  sms:
+    accessKeyId: LTAI4FyoyvdLhU7VYDQKtY1V
+    accessKeySecret: sMDAtjt0jxh9sZ7MDVWSESSJMjtZs5
+    signName: leyou商城
+    templateCode: SMS_206750650
