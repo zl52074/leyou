@@ -1,0 +1,35 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/leyou
+    username: root
+    password: root
+  rabbitmq:
+    host: localhost
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+    template:
+      retry:
+        enabled: true #启用重试
+        initial-interval: 10000ms #第一次失败重试周期
+        max-interval: 30000ms #最大重试周期
+        multiplier: 2 #重试时间倍数
+      exchange: ly.sms.exchange
+      publisher-confirms: true #发送者确认，失败可开启重试
+  redis:
+    database: 0
+    host: localhost # Redis服务器地址
+    port: 6379 # Redis服务器连接端口
+eureka:
+  client:
+    service-url:
+      #配置eureka注册地址
+      defaultZone: http://127.0.0.1:8761/eureka
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #通用mapper日志输出sql
+    map-underscore-to-camel-case: true #驼峰转下划线

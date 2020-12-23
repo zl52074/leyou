@@ -19,6 +19,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description:
@@ -35,7 +36,7 @@ public class SmsUtil {
     private StringRedisTemplate redisTemplate;
 
     private static final String PREFIX = "sms:phone:";
-    private static final long SMS_MIN_INTERVAL_IN_MILLIS = 60000;
+    private static final long SMS_MIN_INTERVAL_IN_MILLIS = 60*1000L;
 
     public CommonResponse sendSms(String phoneNumber,String signName,String templateCode,String templateParam){
         String key = PREFIX+phoneNumber;
@@ -68,7 +69,7 @@ public class SmsUtil {
             }
             log.info("【短信服务】发送短信验证码,phoneNumber:{}",phoneNumber);
             //短信发送成功后，写入redis,存活时间为1分钟
-            redisTemplate.opsForValue().set(key,String.valueOf(System.currentTimeMillis()),SMS_MIN_INTERVAL_IN_MILLIS);
+            redisTemplate.opsForValue().set(key,String.valueOf(System.currentTimeMillis()),1L, TimeUnit.MINUTES);
 
         } catch (ClientException e) {
             log.error("【短信服务】短信发送异常,phoneNumber:{}",phoneNumber,e);

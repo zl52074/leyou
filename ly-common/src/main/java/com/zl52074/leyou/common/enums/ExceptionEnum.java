@@ -38,6 +38,10 @@ public  enum ExceptionEnum {
     GOODS_UPDATE_ERROR(500,"商品更新失败"),
     GOODS_SPU_UPDATE_ERROR(500,"商品SPU更新失败"),
     GOODS_DELETE_ERROR(500,"商品删除失败"),
+    INVALID_USER_DATA_TYPE(400,"无效的用户参数"),
+    INVALID_PHONE_NUMBER(400,"无效的手机号"),
+    INVALID_VERIFY_CODE(400,"无效的验证码"),
+    INVALID_USERNAME_OR_PASSWORD(400,"用户名或密码无效"),
     ;
     private int code;
     private String msg;
