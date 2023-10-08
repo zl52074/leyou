@@ -39,7 +39,7 @@ public class SendSms {
     private AmqpTemplate amqpTemplate;
 
     public static void main(String[] args) {
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4FyoyvdLhU7VYDQKtY1V", "sMDAtjt0jxh9sZ7MDVWSESSJMjtZs5");
+        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "xx", "xx");
         IAcsClient client = new DefaultAcsClient(profile);
         CommonRequest request = new CommonRequest();
         request.setSysMethod(MethodType.POST);
