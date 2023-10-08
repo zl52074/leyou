@@ -21,7 +21,7 @@ spring:
         min-idle: 0
 ly:
   sms:
-    accessKeyId: LTAI4FyoyvdLhU7VYDQKtY1V
-    accessKeySecret: sMDAtjt0jxh9sZ7MDVWSESSJMjtZs5
+    accessKeyId: xx
+    accessKeySecret: xx
     signName: leyou商城
     templateCode: SMS_206750650
